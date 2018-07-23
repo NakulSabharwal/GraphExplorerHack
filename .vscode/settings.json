@@ -1,0 +1,15 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/all.min.js":true
+    },
+    "files.exclude": {
+        "src/**/*.js": false,
+        "src/app/*.js": true,
+        "src/**/.js.map": true,
+        "src/**/.d.ts": true,
+        "**/*gulp-tsc*": true
+    }
+}

@@ -1,0 +1,84 @@
+<div class="ms-Pivot">
+    <ul class="ms-Pivot-links" role="tablist">
+        <li class="ms-Pivot-link is-selected" aria-selected="true" data-content="body" [attr.title]="getStr('request body')" tabindex="0"
+            role="tab">
+            {{getStr('request body')}}
+        </li>
+        <li class="ms-Pivot-link" data-content="headers" [attr.title]="getStr('request header')" tabindex="0" role="tab">
+            {{getStr('request header')}}
+        </li>
+        
+    </ul>
+
+
+    <div class="bs-example">
+            <!-- Button HTML (to Trigger Modal) -->
+            <a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">Code</a>
+            <!-- Modal HTML -->
+            <div id="myModal" class="modal fade">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                      aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Code</h4>
+                  </div>
+                  <div class="modal-body">
+                     <form action="/action_page.php">
+                        <select name="lang" onchange="changeText(this.value)">
+                            <option value="cs">C#</option>
+                            <option value="java">Java</option>
+                            <option value="javascript">Javascript</option>
+                        </select>
+                            <br><br>
+                    </form>
+                    <p id="ptext">Select Language above</p><br><br><br><br><br><br><br><br><br><br>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+
+
+    <div class="ms-Pivot-content" data-content="body">
+        <div id="requestBodyContainer">
+            <div id="post-body-editor"></div>
+        </div>
+    </div>
+    <div class="ms-Pivot-content" data-content="headers">
+        <div id="headers-editor" role="grid">
+            <table role="presentation">
+                <tr role="row">
+                    <th role="columnheader" tabindex="0">{{getStr('Key')}}</th>
+                    <th role="columnheader" tabindex="0">{{getStr('Value')}}</th>
+                </tr>
+                <tr role="row" *ngFor="let header of explorerValues.headers; let idx = index" class="header-row">
+                    <td role="gridcell" class="half-width-col">
+                        <input class="c-text-field" (ngModelChange)="createNewHeaderField()" [(ngModel)]="header.name" [disabled]="header.readonly"
+                            role="textbox" aria-label="Add request header name" type="text" [attr.placeholder]="getPlaceholder(header)">
+                        <!--<div class="c-search header-autocomplete" autocomplete="off">
+                            <input role="combobox" class="c-text-field header-name" (ngModelChange)="createNewHeaderField()" [attr.aria-controls]="'headers-autosuggest-'+idx" aria-autocomplete="both" aria-expanded="false" type="text" [attr.placeholder]="getPlaceholder(header)" [(ngModel)]="header.name" [disabled]="header.readonly">
+                            <div class="m-auto-suggest" [attr.id]="'headers-autosuggest-'+idx" role="group">
+                                <ul class="c-menu" aria-hidden="true" data-js-auto-suggest-position="default" tabindex="0" role="listbox"></ul>
+                                <ul class="c-menu f-auto-suggest-no-results" aria-hidden="true" data-js-auto-suggest-position="default" tabindex="0"></ul>
+                            </div>
+                        </div>-->
+
+                    </td>
+                    <td role="gridcell" class="half-width-col">
+                        <input class="c-text-field header-value" [(ngModel)]="header.value" [disabled]="header.readonly" type="text"
+                            name="default" [class.invisible]="isLastHeader(header)" role="textbox" aria-label="Add request header value">
+                    </td>
+                    <td class="remove-header-btn" [class.invisible]="isLastHeader(header)" (click)="removeHeader(header)" (keydown)="removeHeaderKeyDown($event, header)" role="button" aria-label="Remove request header"
+                        tabindex="0">
+                        <i class="ms-Icon ms-Icon--Cancel"></i>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
