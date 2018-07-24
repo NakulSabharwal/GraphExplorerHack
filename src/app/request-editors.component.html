@@ -7,41 +7,42 @@
         <li class="ms-Pivot-link" data-content="headers" [attr.title]="getStr('request header')" tabindex="0" role="tab">
             {{getStr('request header')}}
         </li>
+
+        <li class="ms-Pivot-link" data-content="headers" tabindex="2" role="tab">  
+                <!-- Button HTML (to Trigger Modal) -->
+                <a href="#myModal" data-toggle="modal">Code</a>
+                <!-- Modal HTML -->
+                <div id="myModal" class="modal fade" style="text-align:left">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                          aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Code</h4>
+                      </div>
+                      <div class="modal-body">
+                         <form action="/action_page.php">
+                            <select name="lang" onchange="changeText(this.value)">
+                                <option value="cs">C#</option>
+                                <option value="java">Java</option>
+                                <option value="javascript">Javascript</option>
+                            </select>
+                                <br><br>
+                        </form>
+                        <p id="ptext">Select Language above</p><br><br><br>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        </li>
         
     </ul>
 
 
-    <div class="bs-example">
-            <!-- Button HTML (to Trigger Modal) -->
-            <a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">Code</a>
-            <!-- Modal HTML -->
-            <div id="myModal" class="modal fade">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                      aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Code</h4>
-                  </div>
-                  <div class="modal-body">
-                     <form action="/action_page.php">
-                        <select name="lang" onchange="changeText(this.value)">
-                            <option value="cs">C#</option>
-                            <option value="java">Java</option>
-                            <option value="javascript">Javascript</option>
-                        </select>
-                            <br><br>
-                    </form>
-                    <p id="ptext">Select Language above</p><br><br><br><br><br><br><br><br><br><br>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-    
+   
 
 
     <div class="ms-Pivot-content" data-content="body">
