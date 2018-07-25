@@ -20,17 +20,50 @@ export class RequestEditorsComponent extends GraphExplorerComponent implements A
         this.initPostBodyEditor();
         this.bindEvents();
     }
-    bindEvents() {
+    bindEvents(): void {
         let tabList = document.getElementById("requestTabList");
+        let codeSnippet = document.getElementById("codeSnippet");
         tabList.addEventListener("click", (event) => {
             let target = event.target,
-                tabId = target.getAttribute("data-content"),
-                codeSnippet = document.getElementById("codeSnippet");
+                tabId = target.getAttribute("data-content");
             if(tabId === "code") {
                 let languageList = document.getElementById("languageList");
                 this.handleOnChange(languageList.value);
             }
-        })
+        });
+        let copyButton = document.getElementById("copyCode");
+        copyButton.addEventListener("click", (event) => {
+            this.copyCode(codeSnippet);
+        });
+    }
+
+    copyCode(codeSnippet: HTMLElement): void {
+        let target = document.getElementById("copySnippetTextArea");
+        if(!target) {
+            target = document.createElement("textarea");
+            target.style.position = "absolute";
+            target.style.left = "-9999px";
+            target.style.top = "0";
+            target.id = "copySnippetTextArea";
+            document.body.appendChild(target);
+        }
+        target.textContent = codeSnippet.textContent;
+        
+        // select the content
+        var currentFocus = document.activeElement;
+        target.focus();
+        target.setSelectionRange(0, target.value.length);
+
+        // copy the selection
+        document.execCommand("copy");
+
+        // restore original focus
+        if (currentFocus && typeof currentFocus.focus === "function") {
+            currentFocus.focus();
+        }
+        
+        // clear temporary content
+        target.textContent = "";
     }
 
     initPostBodyEditor() {

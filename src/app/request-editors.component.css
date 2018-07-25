@@ -12,6 +12,16 @@
     max-height: 150px;
 }
 
+.hk-copybutton {
+    display: inline-block;
+    padding: 5px;
+    background-color: #0067b8;
+    border-radius: 2px;
+    text-decoration: none;
+    color: #fff;
+    float: right;
+    cursor: pointer;
+}
 .hk-pre {
     background-color: #fff;
     border: none;
