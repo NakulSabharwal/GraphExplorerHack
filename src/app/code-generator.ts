@@ -62,6 +62,8 @@ function generateJava(requestUrl: string, requestMethod: string, headers: any, p
       }else if(requestMethod == "DELETE"){
         snippetString = snippetString.concat(".buildRequest()");
         snippetString = snippetString.concat(".delete();");
+      }else if(requestMethod == "PATCH" || requestMethod == "PUT"){
+          snippetString = "Coming Soon";
       }
     return snippetString;
 }
