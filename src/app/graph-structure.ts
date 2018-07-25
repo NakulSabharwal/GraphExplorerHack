@@ -19,6 +19,11 @@ export interface GraphEntity {
     links: { [Name: string] : GraphNodeLink; };
 }
 
+export interface GraphAction {
+    name: string
+}
+
+
 export function parseMetadata(apiService:GraphService, version?:GraphApiVersion):Promise<any> {
     // don't try to download invalid metadata
     if (version && GraphApiVersions.indexOf(version) === -1) {
@@ -39,6 +44,8 @@ export function parseMetadata(apiService:GraphService, version?:GraphApiVersion)
                 graphStructureCache.add(version, "EntitySetData", entitySetData);
                 let entityTypeData = getEntityTypes(metadata);
                 graphStructureCache.add(version, "EntityTypeData", entityTypeData);
+                let actionData = getActions(metadata);
+                graphStructureCache.add(version,"ActionsData",actionData);
                 console.log(`${version} metadata successfully parsed`);
                 return resolve();
             }).catch(reject);
@@ -104,6 +111,17 @@ function getEntitySets(metadata:JQuery) {
     return entitySetsObj;
 }
 
+function createActionTypeObject(DOMarray:Element[]){
+    let actions = {};
+    for(let i=0; i<DOMarray.length; i++){
+        let actionName = DOMarray[i].getAttribute("Name");
+        let Action:GraphAction = {
+             name: actionName
+        };
+        actions[actionName] = Action;
+    }
+    return actions;
+}
 
 function createEntityTypeObject (DOMarray:Element[]) {
     let entityTypes = {}
@@ -152,6 +170,18 @@ function getEntityTypes(metadata:any) {
     jQuery.extend(entities, createEntityTypeObject(complexTypes));
 
     return entities;
+}
+
+function getActions(metadata:any) {
+    let methods = {};
+
+    let actions = metadata.find("Action");
+    jQuery.extend(methods, createActionTypeObject(actions));
+
+    // let complexTypes = metadata.find("ComplexType");
+    // jQuery.extend(entities, createEntityTypeObject(complexTypes));
+
+    return methods;
 }
 
 export function getEntityFromTypeName(typePossiblyWithPrefix:string, version:string):GraphEntity {
@@ -279,6 +309,10 @@ export function getUrlsFromServiceURL(version:string):string[] {
 
 export function loadEntitySets(version:string) {
     return graphStructureCache.get(version, "EntitySetData");
+}
+
+export function loadActionData(version:string) {
+    return graphStructureCache.get(version, "ActionsData");
 }
 
 // EntityType and ComplexType

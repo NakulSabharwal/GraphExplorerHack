@@ -6,9 +6,10 @@ import { getRequestBodyEditor, getJsonViewer, getAceEditorFromElId } from "./api
 import { checkHasValidAuthToken, isAuthenticated } from "./auth";
 import { isImageResponse, insertHeadersIntoResponseViewer, handleHtmlResponse, handleXmlResponse, handleJsonResponse, showResults, handleTextResponse, getContentType } from "./response-handlers";
 import { getString } from "./localization-helpers";
-import { constructGraphLinksFromFullPath } from "./graph-structure";
+import { constructGraphLinksFromFullPath, loadActionData } from "./graph-structure";
 import { GraphService } from "./graph-service";
 import { createHeaders } from "./util";
+import { INT_TYPE } from '../../node_modules/@angular/compiler/src/output/output_ast';
 
 @Injectable()
 export class QueryRunnerService {

@@ -22,14 +22,14 @@
                       </div>
                       <div class="modal-body">
                          <form action="/action_page.php">
-                            <select name="lang" onchange="changeText(this.value)">
-                                <option value="cs">C#</option>
-                                <option value="java">Java</option>
-                                <option value="javascript">Javascript</option>
+                            <select name="lang" (change)="handleOnChange($event.target.value)">
+                                <option value="C#">C#</option>
+                                <option value="Java">Java</option>
+                                <option value="Javascript">Javascript</option>
                             </select>
                                 <br><br>
                         </form>
-                        <p id="ptext">Select Language above</p><br><br><br>
+                        <pre id="ptext">Select Language above</pre><br><br><br>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
