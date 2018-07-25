@@ -7,6 +7,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { GraphRequestHeader } from "./base";
 import { GraphExplorerComponent } from "./GraphExplorerComponent";
 import { getRequestBodyEditor, initializeAceEditor } from "./api-explorer-jseditor";
+import {generate} from "./code-generator";
 
 @Component({
   selector: 'request-editors',
@@ -85,5 +86,9 @@ export class RequestEditorsComponent extends GraphExplorerComponent implements A
         //         }
         //     }]);
         // }, 0);
+    }
+    handleOnChange(language: string) {
+        let snippet: string = generate(language.toLowerCase());
+        document.getElementById("ptext").innerText = snippet;
     }
 }
