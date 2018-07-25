@@ -38,7 +38,7 @@ function generateJava(requestUrl: string, requestMethod: string, headers: any, p
         }
     }
 
-    if(requestMethod == "POST" || requestMethod == "PATCH"){
+    if(requestMethod == "POST"){
         let lastPath = pathComponants[pathComponants.length-1];
         let actionData = loadActionData("v1.0");
         if(actionData[lastPath]!== undefined){
@@ -53,16 +53,13 @@ function generateJava(requestUrl: string, requestMethod: string, headers: any, p
           snippetString = snippetString.replace(/.$/,"{object representation of body});");
         }
         
-      }
-
-      
-      if(requestMethod == "GET"){
+      }else if(requestMethod == "GET"){
         snippetString = snippetString.concat(".buildRequest()");
         snippetString = snippetString.concat(".get();");
       }else if(requestMethod == "DELETE"){
         snippetString = snippetString.concat(".buildRequest()");
         snippetString = snippetString.concat(".delete();");
-      }else if(requestMethod == "PATCH" || requestMethod == "PUT"){
+      }else if(requestMethod == "PUT" || requestMethod == "PATCH"){
           snippetString = "Coming Soon";
       }
     return snippetString;
@@ -77,20 +74,38 @@ function generateCSharp(requestUrl: string, requestMethod: string, headers: any,
             let pathString = pathComponants[i];
             let isId = pathString.match(".*\\d+.*");
             if (isId) {
-                snippetString = snippetString.replace(/.$/, "(\"" + pathString + "\")");
+                snippetString = snippetString.concat("[\"" + pathString + "\"]");
                 continue;
             }
-
+            pathString = capitalizeFirstLetter(pathString);
             snippetString = snippetString.concat("." + pathString);
         }
     }
 
-    snippetString = snippetString.concat(".Request()");
-    if (requestMethod === "GET") {
+    if(requestMethod == "POST"){
+        let lastPath = pathComponants[pathComponants.length-1];
+        let actionData = loadActionData("v1.0");
+        if(actionData[lastPath]!== undefined){
+          console.log("action");
+          snippetString = snippetString.concat("({object representation of body})");
+          snippetString = snippetString.concat(".Request()");
+          snippetString = snippetString.concat(".PostAsync();");
+        }else{
+          console.log("no action");
+          snippetString = snippetString.concat(".Request()");
+          snippetString = snippetString.concat(".AddAsync()");
+          snippetString = snippetString.replace(/.$/,"{object representation of body});");
+        }
+        
+      }else if (requestMethod === "GET") {
+        snippetString = snippetString.concat(".Request()");
         snippetString = snippetString.concat(".GetAsync();");
-    }else{
-        snippetString = "Coming Soon";
-    }
+    }else if(requestMethod == "DELETE"){
+        snippetString = snippetString.concat(".Request()");
+        snippetString = snippetString.concat(".DeleteAsync();");
+      }else if(requestMethod == "PUT" || requestMethod == "PATCH"){
+          snippetString = "Coming Soon";
+      }
     return snippetString;
 }
 
@@ -142,4 +157,8 @@ function generateJavaScript(requestUrl: string, requestMethod: string, headers: 
 ${(requestMethod === "POST" && postBodyObjectString !== "") ? postBodyObjectString : ""}                   
 ${callString}`;
     return snippetString;
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
