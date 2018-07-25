@@ -26,13 +26,10 @@ export class RequestEditorsComponent extends GraphExplorerComponent implements A
             let target = event.target,
                 tabId = target.getAttribute("data-content"),
                 codeSnippet = document.getElementById("codeSnippet");
-            if(tabId !== "code") {
-                codeSnippet.innerText = "";
-            } else {
+            if(tabId === "code") {
                 let languageList = document.getElementById("languageList");
                 this.handleOnChange(languageList.value);
             }
-            console.log(target);
         })
     }
 
