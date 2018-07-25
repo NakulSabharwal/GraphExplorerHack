@@ -38,25 +38,31 @@ function generateJava(requestUrl: string, requestMethod: string, headers: any, p
         }
     }
 
-    if (requestMethod === "POST" || requestMethod === "PATCH") {
-        let lastPath = pathComponants[pathComponants.length - 1];
+    if(requestMethod == "POST" || requestMethod == "PATCH"){
+        let lastPath = pathComponants[pathComponants.length-1];
         let actionData = loadActionData("v1.0");
-        if (actionData[lastPath] !== undefined) {
-            console.log("action");
-        } else {
-            console.log("no action");
+        if(actionData[lastPath]!== undefined){
+          console.log("action");
+          snippetString = snippetString.replace(/.$/,"{object representation of body})");
+          snippetString = snippetString.concat(".buildRequest()");
+          snippetString = snippetString.concat(".post();");
+        }else{
+          console.log("no action");
+          snippetString = snippetString.concat(".buildRequest()");
+          snippetString = snippetString.concat(".post()");
+          snippetString = snippetString.replace(/.$/,"{object representation of body});");
         }
-        snippetString = snippetString.replace(/.$/, "{object representation of body})");
-    }
+        
+      }
 
-    snippetString = snippetString.concat(".buildRequest()");
-    if (requestMethod === "GET") {
+      
+      if(requestMethod == "GET"){
+        snippetString = snippetString.concat(".buildRequest()");
         snippetString = snippetString.concat(".get();");
-    } else if (requestMethod === "POST") {
-        snippetString = snippetString.concat(".post();");
-    } else if (requestMethod === "DELETE") {
+      }else if(requestMethod == "DELETE"){
+        snippetString = snippetString.concat(".buildRequest()");
         snippetString = snippetString.concat(".delete();");
-    }
+      }
     return snippetString;
 }
 
@@ -80,6 +86,8 @@ function generateCSharp(requestUrl: string, requestMethod: string, headers: any,
     snippetString = snippetString.concat(".Request()");
     if (requestMethod === "GET") {
         snippetString = snippetString.concat(".GetAsync();");
+    }else{
+        snippetString = "Coming Soon";
     }
     return snippetString;
 }
