@@ -114,14 +114,13 @@ function generateJavaScript(requestUrl: string, requestMethod: string, headers: 
     }
     if (headersString !== "") {
         callString +=
-            `
-            .headers({${headersString}
-            })
-            `;
+        `
+        .headers({${headersString}
+        })`;
     }       
         
-    callString += 
-        `.${(requestMethod === "GET") ? "get()" : ((postBodyObjectString !== "") ? "post(postBody)" : "post()")}
+    callString += `
+        .${(requestMethod === "GET") ? "get()" : ((postBodyObjectString !== "") ? "post(postBody)" : "post()")}
         .then((response) => {
             // Your response handler goes here
         })
