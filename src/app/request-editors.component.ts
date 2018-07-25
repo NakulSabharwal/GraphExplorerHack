@@ -18,6 +18,22 @@ export class RequestEditorsComponent extends GraphExplorerComponent implements A
     ngAfterViewInit(): void {
         this.addEmptyHeader();
         this.initPostBodyEditor();
+        this.bindEvents();
+    }
+    bindEvents() {
+        let tabList = document.getElementById("requestTabList");
+        tabList.addEventListener("click", (event) => {
+            let target = event.target,
+                tabId = target.getAttribute("data-content"),
+                codeSnippet = document.getElementById("codeSnippet");
+            if(tabId !== "code") {
+                codeSnippet.innerText = "";
+            } else {
+                let languageList = document.getElementById("languageList");
+                this.handleOnChange(languageList.value);
+            }
+            console.log(target);
+        })
     }
 
     initPostBodyEditor() {
@@ -89,6 +105,6 @@ export class RequestEditorsComponent extends GraphExplorerComponent implements A
     }
     handleOnChange(language: string) {
         let snippet: string = generate(language.toLowerCase());
-        document.getElementById("ptext").innerText = snippet;
+        document.getElementById("codeSnippet").innerText = snippet;
     }
 }

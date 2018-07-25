@@ -5,6 +5,17 @@
     margin-top: 10px;
 }
 
+.hk-outercontainer{
+    border: 1px solid #ccc;
+    min-height: 100px;
+    overflow: scroll;
+    max-height: 150px;
+}
+
+.hk-pre {
+    background-color: #fff;
+    border: none;
+}
 .header-row input {
 width: 95%;
 margin-top: 5px;

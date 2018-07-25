@@ -1,49 +1,17 @@
 <div class="ms-Pivot">
-    <ul class="ms-Pivot-links" role="tablist">
+    <ul id="requestTabList" class="ms-Pivot-links" role="tablist">
         <li class="ms-Pivot-link is-selected" aria-selected="true" data-content="body" [attr.title]="getStr('request body')" tabindex="0"
             role="tab">
             {{getStr('request body')}}
         </li>
-        <li class="ms-Pivot-link" data-content="headers" [attr.title]="getStr('request header')" tabindex="0" role="tab">
+        <li class="ms-Pivot-link" data-content="headers" [attr.title]="getStr('request header')" tabindex="1" role="tab">
             {{getStr('request header')}}
         </li>
-
-        <li class="ms-Pivot-link" data-content="headers" tabindex="2" role="tab">  
-                <!-- Button HTML (to Trigger Modal) -->
-                <a href="#myModal" data-toggle="modal">Code</a>
-                <!-- Modal HTML -->
-                <div id="myModal" class="modal fade" style="text-align:left">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"
-                          aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Code</h4>
-                      </div>
-                      <div class="modal-body">
-                         <form action="/action_page.php">
-                            <select name="lang" (change)="handleOnChange($event.target.value)">
-                                <option value="C#">C#</option>
-                                <option value="Java">Java</option>
-                                <option value="Javascript">Javascript</option>
-                            </select>
-                                <br><br>
-                        </form>
-                        <pre id="ptext">Select Language above</pre><br><br><br>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+        <li class="ms-Pivot-link" data-content="code" [attr.title]="Code" tabindex="2" role="tab" (select)="selectHandle()" >
+            Code
         </li>
         
     </ul>
-
-
-   
-
 
     <div class="ms-Pivot-content" data-content="body">
         <div id="requestBodyContainer">
@@ -71,15 +39,25 @@
 
                     </td>
                     <td role="gridcell" class="half-width-col">
-                        <input class="c-text-field header-value" [(ngModel)]="header.value" [disabled]="header.readonly" type="text"
-                            name="default" [class.invisible]="isLastHeader(header)" role="textbox" aria-label="Add request header value">
+                        <input class="c-text-field header-value" [(ngModel)]="header.value" [disabled]="header.readonly" type="text" name="default"
+                            [class.invisible]="isLastHeader(header)" role="textbox" aria-label="Add request header value">
                     </td>
-                    <td class="remove-header-btn" [class.invisible]="isLastHeader(header)" (click)="removeHeader(header)" (keydown)="removeHeaderKeyDown($event, header)" role="button" aria-label="Remove request header"
-                        tabindex="0">
+                    <td class="remove-header-btn" [class.invisible]="isLastHeader(header)" (click)="removeHeader(header)" (keydown)="removeHeaderKeyDown($event, header)"
+                        role="button" aria-label="Remove request header" tabindex="0">
                         <i class="ms-Icon ms-Icon--Cancel"></i>
                     </td>
                 </tr>
             </table>
+        </div>
+    </div>
+    <div id="codeModel" class="ms-Pivot-content" data-content="code">
+        <div class="hk-outercontainer">
+            <select id="languageList" name="lang" (change)="handleOnChange($event.target.value)">
+                <option id="java" value="Java">Java</option>
+                <option id="javascript" value="Javascript">Javascript</option>
+                <option id="csharp" value="C#">C#</option>
+            </select>
+            <pre id="codeSnippet" class="hk-pre"></pre>
         </div>
     </div>
 </div>
